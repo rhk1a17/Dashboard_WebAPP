@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.705
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard_WebAPP", "Dashboard_WebAPP\Dashboard_WebAPP.csproj", "{156D4497-BEB8-4A30-AAF5-EF0F71CCE7D7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{156D4497-BEB8-4A30-AAF5-EF0F71CCE7D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{156D4497-BEB8-4A30-AAF5-EF0F71CCE7D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{156D4497-BEB8-4A30-AAF5-EF0F71CCE7D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{156D4497-BEB8-4A30-AAF5-EF0F71CCE7D7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {66BE17E3-B44D-426B-8D59-E727AA493633}
+	EndGlobalSection
+EndGlobal
