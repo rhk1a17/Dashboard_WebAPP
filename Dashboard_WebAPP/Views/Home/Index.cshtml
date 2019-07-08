@@ -4,7 +4,7 @@
 
 <div class="jumbotron">
     <h1>ERS SMA Inverter Data Dashboard</h1>
-    <p><a href="http://www.ers.my/" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <p><a href="http://www.ers.my/" class="btn btn-primary btn-lg">Learn more about ERS! &raquo;</a></p>
 </div>
 
 <div class="row">
@@ -12,7 +12,7 @@
         <div class="single-content text-center">
             <div class="item-icon"><i class="fa fa-cloud-download"></i></div>
             <div class="item-text">
-                <h2> @ViewBag.myDate </h2>
+                <h3> @ViewBag.myDate </h3>
                 <p>Date & Time</p>
             </div>
         </div>
@@ -31,7 +31,7 @@
             <div class="item-icon"><i class="fa fa-graduation-cap"></i></div>
             <div class="item-text">
                 <h3>@ViewBag.myMppts</h3>
-                <p>MPPTs</p>
+                <p>No. of MPPTs</p>
             </div>
         </div>
     </div>
@@ -118,16 +118,7 @@
             <div class="item-icon"><i class="fa fa-cloud-download"></i></div>
             <div class="item-text">
                 <h3>@ViewBag.myTotalYield</h3>
-                <p>Total Yield</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 text-center">
-        <div class="single-content text-center">
-            <div class="item-icon"><i class="fa fa-users"></i></div>
-            <div class="item-text">
-                <h3>@ViewBag.myCurrentYield</h3>
-                <p>Current Yield</p>
+                <p>Total PV Energy</p>
             </div>
         </div>
     </div>
@@ -136,7 +127,16 @@
             <div class="item-icon"><i class="fa fa-graduation-cap"></i></div>
             <div class="item-text">
                 <h3>@ViewBag.myDailyYield</h3>
-                <p>Daily Yield</p>
+                <p>Daily PV Energy</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 text-center">
+        <div class="single-content text-center">
+            <div class="item-icon"><i class="fa fa-users"></i></div>
+            <div class="item-text">
+                <h3>@ViewBag.myCurrentYield</h3>
+                <p>Current PV Power</p>
             </div>
         </div>
     </div>
@@ -145,7 +145,7 @@
             <div class="item-icon"><i class="fa fa-graduation-cap"></i></div>
             <div class="item-text">
                 <h3>@ViewBag.myCondition</h3>
-                <p>Condition</p>
+                <p>Inverter Condition</p>
             </div>
         </div>
     </div>

@@ -11,8 +11,9 @@ namespace Dashboard_WebAPP.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index() // DASHBOARD
         {
+            // ADDING OUTPUT TO VIWBAG TO DISPLAY ON HTML
             ViewBag.myDate = date();
             ViewBag.mySerial = serial();
             ViewBag.myMppts = mppts();
@@ -29,16 +30,9 @@ namespace Dashboard_WebAPP.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Visual() // VISUALIZATION
         {
             ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
 
             return View();
         }
@@ -82,7 +76,7 @@ namespace Dashboard_WebAPP.Controllers
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
-                result = element.DC_c1.ToString();
+                result = element.DC_c1.ToString() + " A";
             }
             return result;
         }
@@ -93,7 +87,7 @@ namespace Dashboard_WebAPP.Controllers
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
-                result = element.DC_v1.ToString();
+                result = element.DC_v1.ToString() + " V";
             }
             return result;
         }
@@ -104,7 +98,7 @@ namespace Dashboard_WebAPP.Controllers
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
-                result = element.DC_p1.ToString();
+                result = element.DC_p1.ToString() + " W";
             }
             return result;
         }
@@ -115,7 +109,7 @@ namespace Dashboard_WebAPP.Controllers
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
-                result = element.DC_c2.ToString();
+                result = element.DC_c2.ToString() + " A";
             }
             return result;
         }
@@ -126,7 +120,7 @@ namespace Dashboard_WebAPP.Controllers
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
-                result = element.DC_v2.ToString();
+                result = element.DC_v2.ToString() + " V";
             }
             return result;
         }
@@ -137,7 +131,7 @@ namespace Dashboard_WebAPP.Controllers
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
-                result = element.DC_p2.ToString();
+                result = element.DC_p2.ToString() + " W";
             }
             return result;
         }
@@ -148,7 +142,7 @@ namespace Dashboard_WebAPP.Controllers
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
-                result = element.total_yield.ToString();
+                result = element.total_yield.ToString() + " Wh";
             }
             return result;
         }
@@ -159,7 +153,7 @@ namespace Dashboard_WebAPP.Controllers
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
-                result = element.current_yield.ToString();
+                result = element.current_yield.ToString() + " W";
             }
             return result;
         }
@@ -170,7 +164,7 @@ namespace Dashboard_WebAPP.Controllers
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
-                result = element.daily_yield.ToString();
+                result = element.daily_yield.ToString() + " Wh";
             }
             return result;
         }
@@ -181,7 +175,16 @@ namespace Dashboard_WebAPP.Controllers
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
-                result = element.condition.ToString();
+                string cond = element.condition.ToString();
+                if (cond == "307")
+                {
+                    result = "Working";
+                }
+                else
+                {
+                    result = "Error";
+                }
+
             }
             return result;
         }
@@ -324,6 +327,9 @@ namespace Dashboard_WebAPP.Controllers
                 set;
             }
         }
+
+        // ==============================START OF DATA VISUALIZATION===============================
+
     }
 }
 
