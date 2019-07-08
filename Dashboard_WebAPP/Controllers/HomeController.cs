@@ -14,6 +14,18 @@ namespace Dashboard_WebAPP.Controllers
         public ActionResult Index()
         {
             ViewBag.myDate = date();
+            ViewBag.mySerial = serial();
+            ViewBag.myMppts = mppts();
+            ViewBag.myDCc1 = DC_c1();
+            ViewBag.myDCv1 = DC_v1();
+            ViewBag.myDCp1 = DC_p1();
+            ViewBag.myDCc2 = DC_c2();
+            ViewBag.myDCv2 = DC_v2();
+            ViewBag.myDCp2 = DC_p2();
+            ViewBag.myTotalYield = total_yield();
+            ViewBag.myCurrentYield = current_yield();
+            ViewBag.myDailyYield = daily_yield();
+            ViewBag.myCondition = condition();
             return View();
         }
 
@@ -34,92 +46,144 @@ namespace Dashboard_WebAPP.Controllers
         public string date()
         {
             var sqldata = ConnectSQL();
-            var result = sqldata[0];
-            return result.ToString();
+            var result = string.Empty;
+            foreach (sqlData element in sqldata)
+            {
+                result = element.date.ToString();
+            }
+            return result;
         }
 
         public string serial()
         {
             var sqldata = ConnectSQL();
-            var result = sqldata[1];
-            return result.ToString();
+            var result = string.Empty;
+            foreach (sqlData element in sqldata)
+            {
+                result = element.serial.ToString();
+            }
+            return result;
         }
 
         public string mppts()
         {
             var sqldata = ConnectSQL();
-            var result = sqldata[2];
-            return result.ToString();
+            var result = string.Empty;
+            foreach (sqlData element in sqldata)
+            {
+                result = element.mppts.ToString();
+            }
+            return result;
         }
 
         public string DC_c1()
         {
             var sqldata = ConnectSQL();
-            var result = sqldata[3];
-            return result.ToString();
+            var result = string.Empty;
+            foreach (sqlData element in sqldata)
+            {
+                result = element.DC_c1.ToString();
+            }
+            return result;
         }
 
         public string DC_v1()
         {
             var sqldata = ConnectSQL();
-            var result = sqldata[4];
-            return result.ToString();
+            var result = string.Empty;
+            foreach (sqlData element in sqldata)
+            {
+                result = element.DC_v1.ToString();
+            }
+            return result;
         }
 
         public string DC_p1()
         {
             var sqldata = ConnectSQL();
-            var result = sqldata[5];
-            return result.ToString();
+            var result = string.Empty;
+            foreach (sqlData element in sqldata)
+            {
+                result = element.DC_p1.ToString();
+            }
+            return result;
         }
 
         public string DC_c2()
         {
             var sqldata = ConnectSQL();
-            var result = sqldata[6];
-            return result.ToString();
+            var result = string.Empty;
+            foreach (sqlData element in sqldata)
+            {
+                result = element.DC_c2.ToString();
+            }
+            return result;
         }
 
         public string DC_v2()
         {
             var sqldata = ConnectSQL();
-            var result = sqldata[7];
-            return result.ToString();
+            var result = string.Empty;
+            foreach (sqlData element in sqldata)
+            {
+                result = element.DC_v2.ToString();
+            }
+            return result;
         }
 
         public string DC_p2()
         {
             var sqldata = ConnectSQL();
-            var result = sqldata[8];
-            return result.ToString();
+            var result = string.Empty;
+            foreach (sqlData element in sqldata)
+            {
+                result = element.DC_p2.ToString();
+            }
+            return result;
         }
 
         public string total_yield()
         {
             var sqldata = ConnectSQL();
-            var result = sqldata[9];
-            return result.ToString();
+            var result = string.Empty;
+            foreach (sqlData element in sqldata)
+            {
+                result = element.total_yield.ToString();
+            }
+            return result;
         }
 
         public string current_yield()
         {
             var sqldata = ConnectSQL();
-            var result = sqldata[10];
-            return result.ToString();
+            var result = string.Empty;
+            foreach (sqlData element in sqldata)
+            {
+                result = element.current_yield.ToString();
+            }
+            return result;
         }
 
         public string daily_yield()
         {
             var sqldata = ConnectSQL();
-            var result = sqldata[11];
-            return result.ToString();
+            var result = string.Empty;
+            foreach (sqlData element in sqldata)
+            {
+                result = element.daily_yield.ToString();
+            }
+            return result;
         }
 
         public string condition()
         {
             var sqldata = ConnectSQL();
-            var result = sqldata[12];
-            return result.ToString();
+            var result = string.Empty;
+            foreach (sqlData element in sqldata)
+            {
+                result = element.condition.ToString();
+            }
+            return result;
         }
 
         public List<sqlData> ConnectSQL()
@@ -129,7 +193,7 @@ namespace Dashboard_WebAPP.Controllers
             // new list
             List<sqlData> dataList = new List<sqlData>();
 
-            //retrieving latest row from sql table
+            //SQL query to retrieve latest row from sql table
             string retrieve = "SELECT TOP 1 * FROM INVERTER_TABLE ORDER BY _datetime DESC";
 
             // SQL login data
@@ -150,21 +214,21 @@ namespace Dashboard_WebAPP.Controllers
                     {
                         while (reader.Read())
                         {
-                            dataList.Add(new sqlData
+                            dataList.Add(new sqlData()
                             {
-                                date = reader.GetValue(0),
-                                serial = reader.GetValue(1),
-                                mppts = reader.GetValue(2),
-                                DC_c1 = reader.GetValue(3),
-                                DC_v1 = reader.GetValue(4),
-                                DC_p1 = reader.GetValue(5),
-                                DC_c2 = reader.GetValue(6),
-                                DC_v2 = reader.GetValue(7),
-                                DC_p2 = reader.GetValue(8),
-                                total_yield = reader.GetValue(9),
-                                current_yield = reader.GetValue(10),
-                                daily_yield = reader.GetValue(11),
-                                condition = reader.GetValue(12),
+                                date = reader.GetDateTime(0),
+                                serial = reader.GetInt32(1),
+                                mppts = reader.GetInt32(2),
+                                DC_c1 = reader.GetDouble(3),
+                                DC_v1 = reader.GetDouble(4),
+                                DC_p1 = reader.GetDouble(5),
+                                DC_c2 = reader.GetDouble(6),
+                                DC_v2 = reader.GetDouble(7),
+                                DC_p2 = reader.GetDouble(8),
+                                total_yield = reader.GetDouble(9),
+                                current_yield = reader.GetDouble(10),
+                                daily_yield = reader.GetDouble(11),
+                                condition = reader.GetString(12),
                             });
                         }
                         
@@ -182,79 +246,79 @@ namespace Dashboard_WebAPP.Controllers
 
         public class sqlData
         {
-            public object date
+            public DateTime date
             {
                 get;
                 set;
             }
 
-            public object serial
+            public int serial
             {
                 get;
                 set;
             }
 
-            public object mppts
+            public int mppts
             {
                 get;
                 set;
             }
 
-            public object DC_c1
+            public double DC_c1
             {
                 get;
                 set;
             }
 
-            public object DC_v1
+            public double DC_v1
             {
                 get;
                 set;
             }
 
-            public object DC_p1
+            public double DC_p1
             {
                 get;
                 set;
             }
 
-            public object DC_c2
+            public double DC_c2
             {
                 get;
                 set;
             }
 
-            public object DC_v2
+            public double DC_v2
             {
                 get;
                 set;
             }
 
-            public object DC_p2
+            public double DC_p2
             {
                 get;
                 set;
             }
 
-            public object total_yield
+            public double total_yield
             {
                 get;
                 set;
             }
 
-            public object current_yield
+            public double current_yield
             {
                 get;
                 set;
             }
 
-            public object daily_yield
+            public double daily_yield
             {
                 get;
                 set;
             }
 
-            public object condition
+            public string condition
             {
                 get;
                 set;
