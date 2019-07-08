@@ -37,6 +37,7 @@ namespace Dashboard_WebAPP.Controllers
             return View();
         }
 
+        //===============================START OF DASHBOARD==================================
         public string date()
         {
             var sqldata = ConnectSQL();
@@ -331,23 +332,25 @@ namespace Dashboard_WebAPP.Controllers
             }
         }
 
-        // ==============================START OF DATA VISUALIZATION===============================
-        
-        public List<sqlData> sqlChart()
+        //===============================END OF DASHBOARD===================================
+
+        // ==============================START OF POWER CHART===============================
+
+        public List<sqlData> sqlPowerChart()
         {
             SqlConnectionStringBuilder sql = new SqlConnectionStringBuilder();
 
-            DateTime dateNow = DateTime.Now;
-
+            // QUERY TO RETRIEVE DATA FROM SQL TO PLOT POWER CHART
             string retrieve = "SELECT * FROM INVERTER_TABLE WHERE _datetime > GETDATE() ORDER BY _datetime;";
 
-            List<sqlData> chartData = new List<sqlData>();
+            List<sqlData> chartPowerData = new List<sqlData>(); // NEW LIST "chartData" TO PLOT POWER CHART
 
             sql.DataSource = "sqlsever-ers.database.windows.net";   // Server name from azure
             sql.UserID = "ers"; // ID to access DB
             sql.Password = "testing123#";   //password to access DB
             sql.InitialCatalog = "inverterDB";  //Database name
 
+            //CONNECTING TO SQL TO RETREIVE DATA AND ADD IT TO "chartPowerData"
             using (SqlConnection sqlConn = new SqlConnection(sql.ConnectionString))
             {
                 SqlCommand sqlCommand = new SqlCommand(retrieve, sqlConn);
@@ -360,12 +363,9 @@ namespace Dashboard_WebAPP.Controllers
                     {
                         while (reader.Read())
                         {
-                            DateTime myDate = reader.GetDateTime(0);
-                            string timestring = myDate.ToShortTimeString();
-
-                            chartData.Add(new sqlData()
+                            chartPowerData.Add(new sqlData()
                             {
-                                date = timestring,
+                                date = reader.GetDateTime(0).ToShortTimeString(),// CONVERTING DATETIME FORMAT FROM SQL TO ONLY TIME STRING
                                 serial = reader.GetInt32(1),
                                 mppts = reader.GetInt32(2),
                                 DC_c1 = reader.GetDouble(3),
@@ -389,12 +389,13 @@ namespace Dashboard_WebAPP.Controllers
                 }
                 sqlConn.Close();
             }
-            return chartData;
+            return chartPowerData;
         }
 
         public WebImage powerChart()
         {
-            var chartData = sqlChart();
+            // GENERATING WEB IMAGE FROM SQL DATA TO DISPLAY ON HTML
+            var chartData = sqlPowerChart();
             var dataTimeList = chartData.Select(i => i.date).ToArray();
             var dataValueList = chartData.Select(i => i.current_yield).ToArray();
             var dataChart = CreateChart(dataTimeList, dataValueList);
@@ -403,6 +404,7 @@ namespace Dashboard_WebAPP.Controllers
 
         public Chart CreateChart(string[] dataTimeList, Double[] dataValueList)
         {
+            // CREATE AND CONFIGURING CHART TO BE DISPLAYED ON HTML
             var chart = new Chart(width: 1000, height: 300)
                 .AddLegend("Power Generated")
                 .AddSeries(
@@ -410,9 +412,13 @@ namespace Dashboard_WebAPP.Controllers
                 chartType: "line",
                 xValue: dataTimeList,
                 yValues: dataValueList)
+                .SetYAxis(title: "Power (W)")
+                .SetXAxis(title: "Time")
                 .Write("png");
             return chart;
         }
+
+        //===============================END OF POWER CHART===================================
     }
 }
 
