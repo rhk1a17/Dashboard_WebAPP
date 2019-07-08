@@ -195,7 +195,7 @@ namespace Dashboard_WebAPP.Controllers
 
             //SQL query to retrieve latest row from sql table
             string retrieve = "SELECT TOP 1 * FROM INVERTER_TABLE ORDER BY _datetime DESC";
-
+            
             // SQL login data
             sql.DataSource = "sqlsever-ers.database.windows.net";   // Server name from azure
             sql.UserID = "ers"; // ID to access DB
