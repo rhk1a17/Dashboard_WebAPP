@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Diagnostics;
+using System.Web.Helpers;
 
 namespace Dashboard_WebAPP.Controllers
 {
@@ -217,9 +217,12 @@ namespace Dashboard_WebAPP.Controllers
                     {
                         while (reader.Read())
                         {
+                            DateTime myDate = reader.GetDateTime(0);
+                            string myDate1 = myDate.ToString();
+
                             dataList.Add(new sqlData()
                             {
-                                date = reader.GetDateTime(0),
+                                date = myDate1,
                                 serial = reader.GetInt32(1),
                                 mppts = reader.GetInt32(2),
                                 DC_c1 = reader.GetDouble(3),
@@ -249,7 +252,7 @@ namespace Dashboard_WebAPP.Controllers
 
         public class sqlData
         {
-            public DateTime date
+            public string date
             {
                 get;
                 set;
@@ -329,7 +332,87 @@ namespace Dashboard_WebAPP.Controllers
         }
 
         // ==============================START OF DATA VISUALIZATION===============================
+        
+        public List<sqlData> sqlChart()
+        {
+            SqlConnectionStringBuilder sql = new SqlConnectionStringBuilder();
 
+            DateTime dateNow = DateTime.Now;
+
+            string retrieve = "SELECT * FROM INVERTER_TABLE WHERE _datetime > GETDATE() ORDER BY _datetime;";
+
+            List<sqlData> chartData = new List<sqlData>();
+
+            sql.DataSource = "sqlsever-ers.database.windows.net";   // Server name from azure
+            sql.UserID = "ers"; // ID to access DB
+            sql.Password = "testing123#";   //password to access DB
+            sql.InitialCatalog = "inverterDB";  //Database name
+
+            using (SqlConnection sqlConn = new SqlConnection(sql.ConnectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(retrieve, sqlConn);
+                try
+                {
+                    sqlConn.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            DateTime myDate = reader.GetDateTime(0);
+                            string timestring = myDate.ToShortTimeString();
+
+                            chartData.Add(new sqlData()
+                            {
+                                date = timestring,
+                                serial = reader.GetInt32(1),
+                                mppts = reader.GetInt32(2),
+                                DC_c1 = reader.GetDouble(3),
+                                DC_v1 = reader.GetDouble(4),
+                                DC_p1 = reader.GetDouble(5),
+                                DC_c2 = reader.GetDouble(6),
+                                DC_v2 = reader.GetDouble(7),
+                                DC_p2 = reader.GetDouble(8),
+                                total_yield = reader.GetDouble(9),
+                                current_yield = reader.GetDouble(10),
+                                daily_yield = reader.GetDouble(11),
+                                condition = reader.GetString(12),
+                            });
+                        }
+                    }
+
+                }
+                catch(SqlException ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+                sqlConn.Close();
+            }
+            return chartData;
+        }
+
+        public WebImage powerChart()
+        {
+            var chartData = sqlChart();
+            var dataTimeList = chartData.Select(i => i.date).ToArray();
+            var dataValueList = chartData.Select(i => i.current_yield).ToArray();
+            var dataChart = CreateChart(dataTimeList, dataValueList);
+            return dataChart.ToWebImage();
+        }
+
+        public Chart CreateChart(string[] dataTimeList, Double[] dataValueList)
+        {
+            var chart = new Chart(width: 1000, height: 300)
+                .AddLegend("Power Generated")
+                .AddSeries(
+                name: "ERS SMA Inverter",
+                chartType: "line",
+                xValue: dataTimeList,
+                yValues: dataValueList)
+                .Write("png");
+            return chart;
+        }
     }
 }
 
