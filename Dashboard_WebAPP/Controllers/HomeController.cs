@@ -333,7 +333,6 @@ namespace Dashboard_WebAPP.Controllers
         }
 
         //===============================END OF DASHBOARD===================================
-
         // ==============================START OF POWER CHART===============================
 
         public List<sqlData> sqlPowerChart()
@@ -499,9 +498,10 @@ namespace Dashboard_WebAPP.Controllers
                 yValues: dataValueList)
                 .SetYAxis(title: "Energy (kWh)")
                 .SetXAxis(title: "Date")
-                .Write("png");
+                .Write("png"); // CONVERTTO PNG TO BE DISPLAYED AS AN IMAGE ON HTML
             return chart;
         }
+        //===============================END OF MONTHLY CHART===============================
     }
 }
 
