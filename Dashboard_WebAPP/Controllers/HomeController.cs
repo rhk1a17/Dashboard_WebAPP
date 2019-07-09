@@ -497,7 +497,7 @@ namespace Dashboard_WebAPP.Controllers
                 chartType: "line",
                 xValue: dataTimeList,
                 yValues: dataValueList)
-                .SetYAxis(title: "Energy (Wh)")
+                .SetYAxis(title: "Energy (kWh)")
                 .SetXAxis(title: "Date")
                 .Write("png");
             return chart;
