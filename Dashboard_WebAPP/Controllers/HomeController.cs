@@ -494,7 +494,7 @@ namespace Dashboard_WebAPP.Controllers
                 .AddLegend("Daily Energy Generated")
                 .AddSeries(
                 name: "ERS SMA Inverter",
-                chartType: "line",
+                chartType: "column",
                 xValue: dataTimeList,
                 yValues: dataValueList)
                 .SetYAxis(title: "Energy (kWh)")
