@@ -179,7 +179,7 @@ namespace Dashboard_WebAPP.Controllers
                 string cond = element.condition.ToString();
                 if (cond == "307")
                 {
-                    result = "Working";
+                    result = "Good";
                 }
                 else
                 {
