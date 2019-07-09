@@ -7,14 +7,40 @@
 </div>
 
 <div>
-    <button style="background-color:azure" onclick="lastweek('#dust','#dustweek','#dustmonth','#dustyear', 'dustChart')" id="powerday">Day</button>
-    <button style="background-color:lightblue" onclick="lastmonth('#dust','#dustmonth','#dustweek','#dustyear', 'dustChart')" id="poweronth">Month</button>
+    <button style="background-color:azure" onclick="daily('#powerChart1','#powerday','#powermonth', 'powerChart')" id="powerday">Day</button>
+    <button style="background-color:lightblue" onclick="monthly('#powerChart1', '#powermonth', '#powerday', 'monthlyChart')" id="powermonth">Month</button>
 </div>
 <div class="jumbotron">
-    <p class="lead">Power Generated Graph</p>
-    <img id="powerChart" src="@Url.Action("powerChart","Home")" />
+    <p id="title" class="lead">ERS SMA Graph</p>
+    <img id="powerChart1" src="@Url.Action("powerChart","Home")" />
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+<script type="text/javascript">
 
+    function daily(id, id1, id2, chartName) {
+        $(id1).prop("disabled", true);
+        $(id2).prop("disabled", false);
+
+        $(id1).attr('style', 'background-color:azure');
+        $(id2).attr('style', 'background-color:lightblue');
+
+        var inStr = '@Url.Action("xChart","Home")';
+        inStr = inStr.replace("xChart", chartName);
+        $(id).attr('src', inStr);
+    }
+
+    function monthly(id, id1, id2, chartName) {
+        $(id1).prop("disabled", true);
+        $(id2).prop("disabled", false);
+
+        $(id1).attr('style', 'background-color:azure');
+        $(id2).attr('style', 'background-color:lightblue');
+
+        var inStr = '@Url.Action("xChart","Home")';
+        inStr = inStr.replace("xChart", chartName);
+        $(id).attr('src', inStr);
+    }
+
+</script>

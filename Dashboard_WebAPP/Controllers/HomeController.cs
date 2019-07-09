@@ -398,15 +398,15 @@ namespace Dashboard_WebAPP.Controllers
             var chartData = sqlPowerChart();
             var dataTimeList = chartData.Select(i => i.date).ToArray();
             var dataValueList = chartData.Select(i => i.current_yield).ToArray();
-            var dataChart = CreateChart(dataTimeList, dataValueList);
+            var dataChart = CreatePowerChart(dataTimeList, dataValueList);
             return dataChart.ToWebImage();
         }
 
-        public Chart CreateChart(string[] dataTimeList, Double[] dataValueList)
+        public Chart CreatePowerChart(string[] dataTimeList, Double[] dataValueList)
         {
             // CREATE AND CONFIGURING CHART TO BE DISPLAYED ON HTML
             var chart = new Chart(width: 1000, height: 300)
-                .AddLegend("Power Generated")
+                .AddLegend("Power Generated Today")
                 .AddSeries(
                 name: "ERS SMA Inverter",
                 chartType: "line",
@@ -419,6 +419,89 @@ namespace Dashboard_WebAPP.Controllers
         }
 
         //===============================END OF POWER CHART===================================
+        //===============================START OF MONTHLY CHART===============================
+
+        public List<sqlData> sqlMonthlyChart()
+        {
+            SqlConnectionStringBuilder sql = new SqlConnectionStringBuilder();
+
+            // QUERY TO RETRIEVE DATA FROM SQL TO PLOT POWER CHART
+            string retrieve = ";WITH cte AS (SELECT *,ROW_NUMBER() OVER (PARTITION BY CONVERT(date, _datetime) ORDER BY daily_yield DESC) AS rn FROM INVERTER_TABLE)SELECT * FROM cte WHERE rn = 1;";
+
+            List<sqlData> chartMonthlyData = new List<sqlData>(); // NEW LIST "chartData" TO PLOT POWER CHART
+
+            sql.DataSource = "sqlsever-ers.database.windows.net";   // Server name from azure
+            sql.UserID = "ers"; // ID to access DB
+            sql.Password = "testing123#";   //password to access DB
+            sql.InitialCatalog = "inverterDB";  //Database name
+
+            //CONNECTING TO SQL TO RETREIVE DATA AND ADD IT TO "chartPowerData"
+            using (SqlConnection sqlConn = new SqlConnection(sql.ConnectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(retrieve, sqlConn);
+                try
+                {
+                    sqlConn.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            chartMonthlyData.Add(new sqlData()
+                            {
+                                date = reader.GetDateTime(0).ToShortDateString(),// CONVERTING DATETIME FORMAT FROM SQL TO ONLY TIME STRING
+                                serial = reader.GetInt32(1),
+                                mppts = reader.GetInt32(2),
+                                DC_c1 = reader.GetDouble(3),
+                                DC_v1 = reader.GetDouble(4),
+                                DC_p1 = reader.GetDouble(5),
+                                DC_c2 = reader.GetDouble(6),
+                                DC_v2 = reader.GetDouble(7),
+                                DC_p2 = reader.GetDouble(8),
+                                total_yield = reader.GetDouble(9),
+                                current_yield = reader.GetDouble(10),
+                                daily_yield = reader.GetDouble(11),
+                                condition = reader.GetString(12),
+                            });
+                        }
+                    }
+
+                }
+                catch (SqlException ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+                sqlConn.Close();
+            }
+            return chartMonthlyData;
+        }
+
+        public WebImage monthlyChart()
+        {
+            // GENERATING WEB IMAGE FROM SQL DATA TO DISPLAY ON HTML
+            var chartData = sqlMonthlyChart();
+            var dataTimeList = chartData.Select(i => i.date).ToArray();
+            var dataValueList = chartData.Select(i => i.daily_yield).ToArray();
+            var dataChart = CreateMonthlyChart(dataTimeList, dataValueList);
+            return dataChart.ToWebImage();
+        }
+
+        public Chart CreateMonthlyChart(string[] dataTimeList, Double[] dataValueList)
+        {
+            // CREATE AND CONFIGURING CHART TO BE DISPLAYED ON HTML
+            var chart = new Chart(width: 1000, height: 300)
+                .AddLegend("Daily Energy Generated")
+                .AddSeries(
+                name: "ERS SMA Inverter",
+                chartType: "line",
+                xValue: dataTimeList,
+                yValues: dataValueList)
+                .SetYAxis(title: "Energy (Wh)")
+                .SetXAxis(title: "Date")
+                .Write("png");
+            return chart;
+        }
     }
 }
 
