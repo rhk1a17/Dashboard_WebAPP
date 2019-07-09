@@ -5,8 +5,16 @@
 <div>
     <h1>Visualization of Data</h1>
 </div>
+
+<div>
+    <button style="background-color:azure" onclick="lastweek('#dust','#dustweek','#dustmonth','#dustyear', 'dustChart')" id="powerday">Day</button>
+    <button style="background-color:lightblue" onclick="lastmonth('#dust','#dustmonth','#dustweek','#dustyear', 'dustChart')" id="poweronth">Month</button>
+</div>
 <div class="jumbotron">
     <p class="lead">Power Generated Graph</p>
     <img id="powerChart" src="@Url.Action("powerChart","Home")" />
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 
