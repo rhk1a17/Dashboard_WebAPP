@@ -143,7 +143,7 @@ namespace Dashboard_WebAPP.Controllers
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
-                result = element.total_yield.ToString() + " Wh";
+                result = element.total_yield.ToString() + " kWh";
             }
             return result;
         }
