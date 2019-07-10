@@ -341,6 +341,9 @@ namespace Dashboard_WebAPP.Controllers
 
             // QUERY TO RETRIEVE DATA FROM SQL TO PLOT POWER CHART
             string retrieve = "SELECT * FROM INVERTER_TABLE WHERE CONVERT(date, _datetime) = FORMAT(GETDATE(), 'yyyy-dd-MM') ORDER BY _datetime;";
+            
+            // QUERY TO DISPLAY SPECIFIC DAY'S GRAPH
+            //string retrieve = "SELECT * FROM INVERTER_TABLE WHERE CONVERT(date, _datetime) = CONVERT(date, '2019-09-07') ORDER BY _datetime;";
 
             List<sqlData> chartPowerData = new List<sqlData>(); // NEW LIST "chartData" TO PLOT POWER CHART
 
