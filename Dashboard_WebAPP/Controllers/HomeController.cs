@@ -198,7 +198,7 @@ namespace Dashboard_WebAPP.Controllers
             List<sqlData> dataList = new List<sqlData>();
 
             //SQL query to retrieve latest row from sql table
-            string retrieve = "SELECT TOP 1 * FROM INVERTER_TABLE ORDER BY _datetime DESC";
+            string retrieve = "SELECT TOP 1 * FROM INVERTER_DATA ORDER BY _datetime DESC";
             
             // SQL login data
             sql.DataSource = "sqlsever-ers.database.windows.net";   // Server name from azure
@@ -235,7 +235,7 @@ namespace Dashboard_WebAPP.Controllers
                                 total_yield = reader.GetDouble(9),
                                 current_yield = reader.GetDouble(10),
                                 daily_yield = reader.GetDouble(11),
-                                condition = reader.GetString(12),
+                                condition = reader.GetInt32(12),
                             });
                         }
                         
@@ -325,7 +325,7 @@ namespace Dashboard_WebAPP.Controllers
                 set;
             }
 
-            public string condition
+            public Int32 condition
             {
                 get;
                 set;
@@ -340,7 +340,7 @@ namespace Dashboard_WebAPP.Controllers
             SqlConnectionStringBuilder sql = new SqlConnectionStringBuilder();
 
             // QUERY TO RETRIEVE DATA FROM SQL TO PLOT POWER CHART
-            string retrieve = "SELECT * FROM INVERTER_TABLE WHERE CONVERT(date, _datetime) = FORMAT(GETDATE(), 'yyyy-dd-MM') ORDER BY _datetime;";
+            string retrieve = "SELECT * FROM INVERTER_DATA WHERE CONVERT(date, _datetime) = FORMAT(GETDATE(), 'yyyy/MM/dd') ORDER BY _datetime;";
             
             // QUERY TO DISPLAY SPECIFIC DAY'S GRAPH
             //string retrieve = "SELECT * FROM INVERTER_TABLE WHERE CONVERT(date, _datetime) = CONVERT(date, '2019-09-07') ORDER BY _datetime;";
@@ -379,7 +379,7 @@ namespace Dashboard_WebAPP.Controllers
                                 total_yield = reader.GetDouble(9),
                                 current_yield = reader.GetDouble(10),
                                 daily_yield = reader.GetDouble(11),
-                                condition = reader.GetString(12),
+                                condition = reader.GetInt32(12),
                             });
                         }
                     }
@@ -428,7 +428,7 @@ namespace Dashboard_WebAPP.Controllers
             SqlConnectionStringBuilder sql = new SqlConnectionStringBuilder();
 
             // QUERY TO RETRIEVE DATA FROM SQL TO PLOT POWER CHART
-            string retrieve = ";WITH cte AS (SELECT *,ROW_NUMBER() OVER (PARTITION BY CONVERT(date, _datetime) ORDER BY daily_yield DESC) AS rn FROM INVERTER_TABLE)SELECT * FROM cte WHERE rn = 1;";
+            string retrieve = ";WITH cte AS (SELECT *,ROW_NUMBER() OVER (PARTITION BY CONVERT(date, _datetime) ORDER BY daily_yield DESC) AS rn FROM INVERTER_DATA)SELECT * FROM cte WHERE rn = 1 AND MONTH(_datetime) =  MONTH('2019/07/01');"; // FORMAT: yyyy/MM/dd
 
             List<sqlData> chartMonthlyData = new List<sqlData>(); // NEW LIST "chartData" TO PLOT POWER CHART
 
@@ -464,7 +464,7 @@ namespace Dashboard_WebAPP.Controllers
                                 total_yield = reader.GetDouble(9),
                                 current_yield = reader.GetDouble(10),
                                 daily_yield = reader.GetDouble(11),
-                                condition = reader.GetString(12),
+                                condition = reader.GetInt32(12),
                             });
                         }
                     }
