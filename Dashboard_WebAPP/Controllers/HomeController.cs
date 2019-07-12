@@ -452,7 +452,7 @@ namespace Dashboard_WebAPP.Controllers
                         {
                             chartMonthlyData.Add(new sqlData()
                             {
-                                date = reader.GetDateTime(0).ToShortDateString(),// CONVERTING DATETIME FORMAT FROM SQL TO ONLY TIME STRING
+                                date = reader.GetDateTime(0).ToString("dd/MM/yyyy"),// CONVERTING DATETIME FORMAT FROM SQL TO ONLY TIME STRING
                                 serial = reader.GetInt32(1),
                                 mppts = reader.GetInt32(2),
                                 DC_c1 = reader.GetDouble(3),
