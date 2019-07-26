@@ -47,7 +47,7 @@ namespace Dashboard_WebAPP.Controllers
             var m = new ViewModel();
             m.SelectedInverter = Request["ddlInverter"];
             ViewData["selectedInverter"] = "Serial Number of Selected Inverter: " + Request["ddlInverter"];
-            ViewBag.powerChart = powerChart(Request["ddlInverter"]); // ADDING OUTPUT TO VIWBAG TO DISPLAY ON HTML
+            //ViewBag.myPowerChart = powerChart(Request["ddlInverter"]); // ADDING OUTPUT TO VIWBAG TO DISPLAY ON HTML
             return View(m);
         }
 
@@ -432,8 +432,8 @@ namespace Dashboard_WebAPP.Controllers
             var chartData = sqlPowerChart(serial_no);
             var dataTimeList = chartData.Select(i => i.date).ToArray();
             var dataValueList = chartData.Select(i => i.current_yield).ToArray();
-            var dataChart = CreatePowerChart(dataTimeList, dataValueList);
-            return dataChart.ToWebImage();
+            var dataChart = CreatePowerChart(dataTimeList, dataValueList).ToWebImage();
+            return dataChart;
         }
 
         public Chart CreatePowerChart(string[] dataTimeList, Double[] dataValueList)
@@ -455,12 +455,12 @@ namespace Dashboard_WebAPP.Controllers
         //===============================END OF POWER CHART===================================
         //===============================START OF MONTHLY CHART===============================
 
-        public List<sqlData> sqlMonthlyChart()
+        public List<sqlData> sqlMonthlyChart(string serial_no)
         {
             SqlConnectionStringBuilder sql = new SqlConnectionStringBuilder();
 
             // QUERY TO RETRIEVE DATA FROM SQL TO PLOT POWER CHART
-            string retrieve = ";WITH cte AS (SELECT *,ROW_NUMBER() OVER (PARTITION BY CONVERT(date, _datetime) ORDER BY daily_yield DESC) AS rn FROM INVERTER_DATA)SELECT * FROM cte WHERE rn = 1 AND MONTH(_datetime) =  MONTH('2019/07/01');"; // FORMAT: yyyy/MM/dd
+            string retrieve = string.Format(";WITH cte AS (SELECT *,ROW_NUMBER() OVER (PARTITION BY CONVERT(date, _datetime) ORDER BY daily_yield DESC) AS rn FROM INVERTER_DATA WHERE SERIAL = {0} )SELECT * FROM cte WHERE rn = 1 AND MONTH(_datetime) =  MONTH('2019/07/01');", serial_no); // FORMAT: yyyy/MM/dd
 
             List<sqlData> chartMonthlyData = new List<sqlData>(); // NEW LIST "chartData" TO PLOT POWER CHART
 
@@ -511,14 +511,14 @@ namespace Dashboard_WebAPP.Controllers
             return chartMonthlyData;
         }
 
-        public WebImage monthlyChart()
+        public WebImage monthlyChart(string serial_no)
         {
             // GENERATING WEB IMAGE FROM SQL DATA TO DISPLAY ON HTML
-            var chartData = sqlMonthlyChart();
+            var chartData = sqlMonthlyChart(serial_no);
             var dataTimeList = chartData.Select(i => i.date).ToArray();
             var dataValueList = chartData.Select(i => i.daily_yield).ToArray();
-            var dataChart = CreateMonthlyChart(dataTimeList, dataValueList);
-            return dataChart.ToWebImage();
+            var dataChart = CreateMonthlyChart(dataTimeList, dataValueList).ToWebImage();
+            return dataChart;
         }
 
         public Chart CreateMonthlyChart(string[] dataTimeList, Double[] dataValueList)
