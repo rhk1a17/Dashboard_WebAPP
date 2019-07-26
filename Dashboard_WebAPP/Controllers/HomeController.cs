@@ -25,7 +25,6 @@ namespace Dashboard_WebAPP.Controllers
         {
             var m = new ViewModel();
             ViewData["selectedInverter"] = "No Inverter Selected.";
-             // ADDING OUTPUT TO VIWBAG TO DISPLAY ON HTML
             return View(m);
         }
 
@@ -47,7 +46,6 @@ namespace Dashboard_WebAPP.Controllers
             var m = new ViewModel();
             m.SelectedInverter = Request["ddlInverter"];
             ViewData["selectedInverter"] = "Serial Number of Selected Inverter: " + Request["ddlInverter"];
-            //ViewBag.myPowerChart = powerChart(Request["ddlInverter"]); // ADDING OUTPUT TO VIWBAG TO DISPLAY ON HTML
             return View(m);
         }
 
