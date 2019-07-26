@@ -2,8 +2,19 @@
 @{
     ViewBag.Title = "Visual";
 }
+@model Dashboard_WebAPP.Models.ViewModel
+
 <div>
     <h1>Visualization of Data</h1>
+</div>
+
+<div>
+    @using (Html.BeginForm("Visual", "Home", FormMethod.Post))
+    {
+        @Html.DropDownList("ddlInverter", Model.GetInverterListItems(), "Select an Inverter", new { @onchange = "this.form.submit();" })
+
+    }
+    @ViewData["selectedInverter"]
 </div>
 
 <div>
@@ -12,7 +23,7 @@
 </div>
 <div class="jumbotron">
     <p id="title" class="lead">ERS SMA Graph</p>
-    <img id="powerChart1" src="@Url.Action("powerChart","Home")" />
+    <img id="powerChart1" src="@ViewBag.powerChart" />
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

@@ -1,11 +1,20 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }   
+@model Dashboard_WebAPP.Models.ViewModel
 
-<div class="jumbotron">
-    <h1>ERS SMA Inverter Data Dashboard</h1>
-    <p><a href="http://www.ers.my/" class="btn btn-primary btn-lg">Learn more about ERS! &raquo;</a></p>
-</div>
+    <div class="jumbotron">
+        <h1>ERS SMA Inverter Data Dashboard</h1>
+        <p><a href="http://www.ers.my/" class="btn btn-primary btn-lg">Learn more about ERS! &raquo;</a></p>
+
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+            @Html.DropDownList("ddlInverter", Model.GetInverterListItems(), "Select an Inverter", new { @onchange = "this.form.submit();" })
+
+        }
+        @ViewData["selectedInverter"]
+
+    </div>
 
 <div class="row">
     <div class="col-md-3 text-center">

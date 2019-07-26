@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Diagnostics;
 using System.Web.Helpers;
+using Dashboard_WebAPP.Models;
 
 namespace Dashboard_WebAPP.Controllers
 {
@@ -13,34 +14,65 @@ namespace Dashboard_WebAPP.Controllers
     {
         public ActionResult Index() // DASHBOARD
         {
-            // ADDING OUTPUT TO VIWBAG TO DISPLAY ON HTML
-            ViewBag.myDate = date();
-            ViewBag.mySerial = serial();
-            ViewBag.myMppts = mppts();
-            ViewBag.myDCc1 = DC_c1();
-            ViewBag.myDCv1 = DC_v1();
-            ViewBag.myDCp1 = DC_p1();
-            ViewBag.myDCc2 = DC_c2();
-            ViewBag.myDCv2 = DC_v2();
-            ViewBag.myDCp2 = DC_p2();
-            ViewBag.myTotalYield = total_yield();
-            ViewBag.myCurrentYield = current_yield();
-            ViewBag.myDailyYield = daily_yield();
-            ViewBag.myCondition = condition();
-            return View();
+            var m = new ViewModel();
+            ViewData["selectedInverter"] = "No Inverter Selected.";
+            viewbagData(Request["ddlInverter"]); // ADDING OUTPUT TO VIWBAG TO DISPLAY ON HTML
+            return View(m);
         }
+
 
         public ActionResult Visual() // VISUALIZATION
         {
-            ViewBag.Message = "Your application description page.";
+            var m = new ViewModel();
+            ViewData["selectedInverter"] = "No Inverter Selected.";
+             // ADDING OUTPUT TO VIWBAG TO DISPLAY ON HTML
+            return View(m);
+        }
 
-            return View();
+
+        //===============================DROPDOWN MENU=======================================
+        [HttpPost]
+        public ActionResult Index(string dummy)
+        {
+            var m = new ViewModel();
+            m.SelectedInverter = Request["ddlInverter"];
+            ViewData["selectedInverter"] = "Serial Number of Selected Inverter: " + Request["ddlInverter"];
+            viewbagData(Request["ddlInverter"]); // ADDING OUTPUT TO VIWBAG TO DISPLAY ON HTML
+            return View(m);
+        }
+
+        [HttpPost]
+        public ActionResult Visual(string dummy)
+        {
+            var m = new ViewModel();
+            m.SelectedInverter = Request["ddlInverter"];
+            ViewData["selectedInverter"] = "Serial Number of Selected Inverter: " + Request["ddlInverter"];
+            ViewBag.powerChart = powerChart(Request["ddlInverter"]); // ADDING OUTPUT TO VIWBAG TO DISPLAY ON HTML
+            return View(m);
         }
 
         //===============================START OF DASHBOARD==================================
-        public string date()
+
+        public void viewbagData(string serialNumber)
         {
-            var sqldata = ConnectSQL();
+            ViewBag.myDate = date(serialNumber);
+            ViewBag.mySerial = serial(serialNumber);
+            ViewBag.myMppts = mppts(serialNumber);
+            ViewBag.myDCc1 = DC_c1(serialNumber);
+            ViewBag.myDCv1 = DC_v1(serialNumber);
+            ViewBag.myDCp1 = DC_p1(serialNumber);
+            ViewBag.myDCc2 = DC_c2(serialNumber);
+            ViewBag.myDCv2 = DC_v2(serialNumber);
+            ViewBag.myDCp2 = DC_p2(serialNumber);
+            ViewBag.myTotalYield = total_yield(serialNumber);
+            ViewBag.myCurrentYield = current_yield(serialNumber);
+            ViewBag.myDailyYield = daily_yield(serialNumber);
+            ViewBag.myCondition = condition(serialNumber);
+        }
+
+        public string date(string serial_no)
+        {
+            var sqldata = ConnectSQL(serial_no);
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
@@ -49,9 +81,9 @@ namespace Dashboard_WebAPP.Controllers
             return result;
         }
 
-        public string serial()
+        public string serial(string serial_no)
         {
-            var sqldata = ConnectSQL();
+            var sqldata = ConnectSQL(serial_no);
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
@@ -60,9 +92,9 @@ namespace Dashboard_WebAPP.Controllers
             return result;
         }
 
-        public string mppts()
+        public string mppts(string serial_no)
         {
-            var sqldata = ConnectSQL();
+            var sqldata = ConnectSQL(serial_no);
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
@@ -71,9 +103,9 @@ namespace Dashboard_WebAPP.Controllers
             return result;
         }
 
-        public string DC_c1()
+        public string DC_c1(string serial_no)
         {
-            var sqldata = ConnectSQL();
+            var sqldata = ConnectSQL(serial_no);
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
@@ -82,9 +114,9 @@ namespace Dashboard_WebAPP.Controllers
             return result;
         }
 
-        public string DC_v1()
+        public string DC_v1(string serial_no)
         {
-            var sqldata = ConnectSQL();
+            var sqldata = ConnectSQL(serial_no);
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
@@ -93,9 +125,9 @@ namespace Dashboard_WebAPP.Controllers
             return result;
         }
 
-        public string DC_p1()
+        public string DC_p1(string serial_no)
         {
-            var sqldata = ConnectSQL();
+            var sqldata = ConnectSQL(serial_no);
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
@@ -104,9 +136,9 @@ namespace Dashboard_WebAPP.Controllers
             return result;
         }
 
-        public string DC_c2()
+        public string DC_c2(string serial_no)
         {
-            var sqldata = ConnectSQL();
+            var sqldata = ConnectSQL(serial_no);
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
@@ -115,9 +147,9 @@ namespace Dashboard_WebAPP.Controllers
             return result;
         }
 
-        public string DC_v2()
+        public string DC_v2(string serial_no)
         {
-            var sqldata = ConnectSQL();
+            var sqldata = ConnectSQL(serial_no);
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
@@ -126,9 +158,9 @@ namespace Dashboard_WebAPP.Controllers
             return result;
         }
 
-        public string DC_p2()
+        public string DC_p2(string serial_no)
         {
-            var sqldata = ConnectSQL();
+            var sqldata = ConnectSQL(serial_no);
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
@@ -137,9 +169,9 @@ namespace Dashboard_WebAPP.Controllers
             return result;
         }
 
-        public string total_yield()
+        public string total_yield(string serial_no)
         {
-            var sqldata = ConnectSQL();
+            var sqldata = ConnectSQL(serial_no);
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
@@ -148,9 +180,9 @@ namespace Dashboard_WebAPP.Controllers
             return result;
         }
 
-        public string current_yield()
+        public string current_yield(string serial_no)
         {
-            var sqldata = ConnectSQL();
+            var sqldata = ConnectSQL(serial_no);
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
@@ -159,9 +191,9 @@ namespace Dashboard_WebAPP.Controllers
             return result;
         }
 
-        public string daily_yield()
+        public string daily_yield(string serial_no)
         {
-            var sqldata = ConnectSQL();
+            var sqldata = ConnectSQL(serial_no);
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
@@ -170,9 +202,9 @@ namespace Dashboard_WebAPP.Controllers
             return result;
         }
 
-        public string condition()
+        public string condition(string serial_no)
         {
-            var sqldata = ConnectSQL();
+            var sqldata = ConnectSQL(serial_no);
             var result = string.Empty;
             foreach (sqlData element in sqldata)
             {
@@ -190,7 +222,7 @@ namespace Dashboard_WebAPP.Controllers
             return result;
         }
 
-        public List<sqlData> ConnectSQL()
+        public List<sqlData> ConnectSQL(string serial_pass)
         {
             SqlConnectionStringBuilder sql = new SqlConnectionStringBuilder();
 
@@ -198,7 +230,7 @@ namespace Dashboard_WebAPP.Controllers
             List<sqlData> dataList = new List<sqlData>();
 
             //SQL query to retrieve latest row from sql table
-            string retrieve = "SELECT TOP 1 * FROM INVERTER_DATA ORDER BY _datetime DESC";
+            string retrieve = String.Format("SELECT TOP 1 * FROM INVERTER_DATA WHERE SERIAL = {0} ORDER BY _datetime DESC", serial_pass);
             
             // SQL login data
             sql.DataSource = "sqlsever-ers.database.windows.net";   // Server name from azure
@@ -335,18 +367,18 @@ namespace Dashboard_WebAPP.Controllers
         //===============================END OF DASHBOARD===================================
         // ==============================START OF POWER CHART===============================
 
-        public List<sqlData> sqlPowerChart()
+        public List<sqlData> sqlPowerChart(string serial_no)
         {
             SqlConnectionStringBuilder sql = new SqlConnectionStringBuilder();
 
             // QUERY TO RETRIEVE DATA FROM SQL TO PLOT POWER CHART
-            string retrieve = "SELECT * FROM INVERTER_DATA WHERE CONVERT(date, _datetime) = FORMAT(GETDATE(), 'yyyy/MM/dd') ORDER BY _datetime;";
+            string retrieve = string.Format("SELECT * FROM INVERTER_DATA WHERE CONVERT(date, _datetime) = FORMAT(GETDATE(), 'yyyy/MM/dd') AND SERIAL = {0} ORDER BY _datetime;",serial_no);
             
             // QUERY TO DISPLAY SPECIFIC DAY'S GRAPH
-            //string retrieve = "SELECT * FROM INVERTER_TABLE WHERE CONVERT(date, _datetime) = CONVERT(date, '2019-09-07') ORDER BY _datetime;";
+            //string retrieve = "SELECT * FROM INVERTER_DATA WHERE CONVERT(date, _datetime) = CONVERT(date, '2019-07-14') ORDER BY _datetime;";// yyyy-MM-dd
 
             List<sqlData> chartPowerData = new List<sqlData>(); // NEW LIST "chartData" TO PLOT POWER CHART
-
+                
             sql.DataSource = "sqlsever-ers.database.windows.net";   // Server name from azure
             sql.UserID = "ers"; // ID to access DB
             sql.Password = "testing123#";   //password to access DB
@@ -394,10 +426,10 @@ namespace Dashboard_WebAPP.Controllers
             return chartPowerData;
         }
 
-        public WebImage powerChart()
+        public WebImage powerChart(string serial_no)
         {
             // GENERATING WEB IMAGE FROM SQL DATA TO DISPLAY ON HTML
-            var chartData = sqlPowerChart();
+            var chartData = sqlPowerChart(serial_no);
             var dataTimeList = chartData.Select(i => i.date).ToArray();
             var dataValueList = chartData.Select(i => i.current_yield).ToArray();
             var dataChart = CreatePowerChart(dataTimeList, dataValueList);
