@@ -17,6 +17,19 @@
     @ViewData["selectedInverter"]
 </div>
 
+<div class="row">
+    <br />
+</div><!-- SPACING-->
+
+<a class="weatherwidget-io" href=@ViewBag.myURL data-label_1="@ViewBag.myDataLabel" data-label_2="WEATHER" data-theme="marine">SUNGAI BESI WEATHER</a>
+<script>
+    !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = 'https://weatherwidget.io/js/widget.min.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'weatherwidget-io-js');
+</script>
+
+<div class="row">
+    <br />
+</div><!-- SPACING-->
+
 <div>
     <button style="background-color:azure" onclick="daily('#powerChart1','#powerday','#powermonth', 'powerChart')" id="powerday">Day</button>
     <button style="background-color:lightblue" onclick="monthly('#powerChart1', '#powermonth', '#powerday', 'monthlyChart')" id="powermonth">Month</button>

@@ -16,7 +16,6 @@ namespace Dashboard_WebAPP.Models
                 return new List<Inverter>() {
                     new Inverter() {Place = "Sg Besi", Serial="2130242191"},
                     new Inverter() {Place = "Bangsar", Serial="123"},
-                    new Inverter() {Place = "Viet", Serial="3"}
                 };
             }
         }

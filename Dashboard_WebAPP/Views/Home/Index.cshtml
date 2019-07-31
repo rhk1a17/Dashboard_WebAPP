@@ -1,20 +1,24 @@
 ﻿@{
     ViewBag.Title = "Home Page";
-}   
+}
 @model Dashboard_WebAPP.Models.ViewModel
 
-    <div class="jumbotron">
-        <h1>ERS SMA Inverter Data Dashboard</h1>
-        <p><a href="http://www.ers.my/" class="btn btn-primary btn-lg">Learn more about ERS! &raquo;</a></p>
+<div class="jumbotron">
+    <h1>ERS SMA Inverter Data Dashboard</h1>
+    <p><a href="http://www.ers.my/" class="btn btn-primary btn-lg">Learn more about ERS! &raquo;</a></p>
 
-        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-        {
-            @Html.DropDownList("ddlInverter", Model.GetInverterListItems(), "Select an Inverter", new { @onchange = "this.form.submit();" })
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    {
+        @Html.DropDownList("ddlInverter", Model.GetInverterListItems(), "Select an Inverter", new { @onchange = "this.form.submit();" })
 
-        }
-        @ViewData["selectedInverter"]
+    }
+    @ViewData["selectedInverter"]
 
-    </div>
+</div>
+<a class="weatherwidget-io" href=@ViewBag.myURL data-label_1="@ViewBag.myDataLabel" data-label_2="WEATHER" data-theme="marine">SUNGAI BESI WEATHER</a>
+<script>
+    !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = 'https://weatherwidget.io/js/widget.min.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'weatherwidget-io-js');
+</script>
 
 <div class="row">
     <div class="col-md-3 text-center">
