@@ -1,0 +1,117 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@model Dashboard_WebAPP.Models.PortalViewModel
+
+@*<style type="text/css">
+        .jumbotron {
+            margin-top: 20px;
+            background-image: url('../../Style/WhatsApp Image 2019-07-31 at 17.44.00.jpeg');
+            background-size: cover;
+        }
+    </style>*@
+
+
+    <div class="jumbotron">
+        <h1>Sunny Portal Dashboard</h1>
+        <div class="row">
+
+            <div class="col-md-3 text-center">
+                <div class="single-content text-center">
+                    <div class="item-text">
+                        <div><a href="http://www.ers.my/" class="btn btn-primary btn-lg">Learn more about ERS! &raquo;</a></div>
+                        <div class="row">
+                            <br />
+                            <br />
+                        </div><!-- SPACING-->
+                        @using (Html.BeginForm("PortalIndex", "Portal", FormMethod.Post))
+                        {
+                            @Html.DropDownList("ddlInverter_sunny", Model.GetInverterListItems(), "Select an Inverter", new { @onchange = "this.form.submit();" })
+                        }
+                        @ViewData["selectedInverter_sunny"]
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="single-content text-center">
+                    <div class="item-text">
+                        <h3> @ViewBag.myTotalCurrentPowerVal </h3>
+                        <p>Total Current Power</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="single-content text-center">
+                    <div class="item-text">
+                        <h3>@ViewBag.myTotalEnergyToday</h3>
+                        <p>Total Energy Generated Today</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="single-content text-center">
+                    <div class="item-text">
+                        <h3>@ViewBag.myTotalEnergyAllTime</h3>
+                        <p>Energy Generated All Time</p>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end title row -->
+
+
+    </div>
+
+<div class="row">
+    <div class="col-md-3 text-center">
+        <div class="single-content text-center">
+            <div class="item-text">
+                <h3> @ViewBag.myTimestamp </h3>
+                <p>Date & Time</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 text-center">
+        <div class="single-content text-center">
+            <div class="item-text">
+                <h3>@ViewBag.myTitle</h3>
+                <p>Location Name</p>
+            </div>
+        </div>
+    </div>
+</div><!-- end row1 -->
+
+<div class="row">
+    <div class="col-md-3 text-center">
+        <div class="single-content text-center">
+            <div class="item-text">
+                <h3>@ViewBag.myCurrentPower</h3>
+                <p>Current Power</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 text-center">
+        <div class="single-content text-center">
+            <div class="item-text">
+                <h3>@ViewBag.myEnergyToday</h3>
+                <p>PV Energy Today</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 text-center">
+        <div class="single-content text-center">
+            <div class="item-text">
+                <h3>@ViewBag.myTotalEnergy</h3>
+                <p>Total Energy Generated</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 text-center">
+        <div class="single-content text-center">
+            <div class="item-text">
+                <h3>@ViewBag.myCO2today</h3>
+                <p>CO2 Avoided Today</p>
+            </div>
+        </div>
+    </div>
+</div>
+    
