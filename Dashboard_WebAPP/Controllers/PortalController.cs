@@ -43,6 +43,7 @@ namespace Dashboard_WebAPP.Controllers
             ViewBag.myEnergyToday = energy_today(Id);
             ViewBag.myTotalEnergy = total_energy(Id);
             ViewBag.myCO2today = co2_today(Id);
+            ViewBag.myGraphURL = graph_image(Id);
         }
 
         public string Timestamp(string Id)
@@ -154,13 +155,29 @@ namespace Dashboard_WebAPP.Controllers
             return result;
         }
 
+        public string graph_image(string Id)
+        {
+            var sqldata = ConnectSQL(Id);
+            string result = String.Empty;
+            foreach (portal_data element in sqldata)
+            {
+                result = element.real_datetime.ToString();
+            }
+            // OUTPUT TIMESTRING 16/8/2019 10:37:01 AM
+            // REQUIRED TIMESTRING 2019-08-16T113430 //"yyyy-MM-ddTHHmmss"
+            string string1 = String.Concat("https://ers123storage.blob.core.windows.net/graphcontainer/",result);
+            string graph_url = String.Concat(string1, ".png");
+            Debug.WriteLine(graph_url);
+            return graph_url;
+        }
+
         public List<portal_data> ConnectSQL(string Id)
         {
             SqlConnectionStringBuilder sql = new SqlConnectionStringBuilder();
 
             //SQL QUERY
             List<portal_data> dataList = new List<portal_data>();
-            string retrieve = String.Format("SELECT TOP 1 * FROM SUNNY_PORTAL_STRING WHERE CONVERT(VARCHAR,title) ='{0}' ORDER BY _datetime DESC;", Id);
+            string retrieve = String.Format("SELECT TOP 1 * FROM SUNNY_PORTAL_STRING WHERE CONVERT(VARCHAR,title) ='{0}' ORDER BY real_datetime DESC;", Id);
 
             // SQL login data
             sql.DataSource = "sqlsever-ers.database.windows.net";   // Server name from azure
@@ -193,6 +210,8 @@ namespace Dashboard_WebAPP.Controllers
                                 total_energy_unit = reader.GetTextReader(7),
                                 co2_today = reader.GetTextReader(8),
                                 co2_unit = reader.GetTextReader(9),
+                                real_datetime = reader.GetDateTime(10).ToString("yyyy-MM-ddTHHmmss")
+
                             });
                         }
                     }
@@ -263,6 +282,12 @@ namespace Dashboard_WebAPP.Controllers
             }
 
             public TextReader co2_unit
+            {
+                get;
+                set;
+            }
+
+            public string real_datetime
             {
                 get;
                 set;
