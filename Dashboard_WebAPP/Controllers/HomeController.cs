@@ -15,8 +15,10 @@ namespace Dashboard_WebAPP.Controllers
         public ActionResult Index() // DASHBOARD
         {
             var m = new ViewModel();
-            ViewData["selectedInverter"] = "No Inverter Selected.";
-            viewbagData(Request["ddlInverter"]); // ADDING OUTPUT TO VIWBAG TO DISPLAY ON HTML
+            ViewData["selectedInverter"] = "Serial Number of Selected Inverter: 2130242191";
+            viewbagData("2130242191"); // ADDING OUTPUT TO VIWBAG TO DISPLAY ON HTML
+            ViewBag.myURL = "https://forecast7.com/en/3d06101d72/sungai-besi/";
+            ViewBag.myDataLabel = "SUNGAI BESI";
             return View(m);
         }
 
@@ -24,7 +26,10 @@ namespace Dashboard_WebAPP.Controllers
         public ActionResult Visual() // VISUALIZATION
         {
             var m = new ViewModel();
-            ViewData["selectedInverter"] = "No Inverter Selected.";
+            ViewBag.mySerial = "2130242191";
+            ViewData["selectedInverter"] = "Serial Number of Selected Inverter: 2130242191";
+            ViewBag.myURL = "https://forecast7.com/en/3d06101d72/sungai-besi/";
+            ViewBag.myDataLabel = "SUNGAI BESI";
             return View(m);
         }
 
@@ -46,6 +51,7 @@ namespace Dashboard_WebAPP.Controllers
         {
             var m = new ViewModel();
             m.SelectedInverter = Request["ddlInverter"];
+            ViewBag.mySerial = Request["ddlInverter"];
             ViewData["selectedInverter"] = "Serial Number of Selected Inverter: " + Request["ddlInverter"];
             weatherWidget();
             return View(m);

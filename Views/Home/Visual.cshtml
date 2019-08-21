@@ -11,7 +11,7 @@
 <div>
     @using (Html.BeginForm("Visual", "Home", FormMethod.Post))
     {
-        @Html.DropDownList("ddlInverter", Model.GetInverterListItems(), new { @onchange = "this.form.submit();" })
+        @Html.DropDownList("ddlInverter", Model.GetInverterListItems(), "Select an Inverter", new { @onchange = "this.form.submit();" })
 
     }
     @ViewData["selectedInverter"]
@@ -36,7 +36,7 @@
 </div>
 <div class="jumbotron">
     <p id="title" class="lead">ERS SMA Graph</p>
-    <img id="powerChart1" src="@Url.Action("powerChart","Home", new { serial_no = ViewBag.mySerial })" />
+    <img id="powerChart1" src="@Url.Action("powerChart","Home", new { serial_no = Request["ddlInverter"] })" />
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

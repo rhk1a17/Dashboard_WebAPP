@@ -25,7 +25,7 @@
                         </div><!-- SPACING-->
                         @using (Html.BeginForm("PortalIndex", "Portal", FormMethod.Post))
                         {
-                            @Html.DropDownList("ddlInverter_sunny", Model.GetInverterListItems(), new { @onchange = "this.form.submit();" })
+                            @Html.DropDownList("ddlInverter_sunny", Model.GetInverterListItems(), "Select an Inverter", new { @onchange = "this.form.submit();" })
                         }
                         @ViewData["selectedInverter_sunny"]
                     </div>

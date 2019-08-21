@@ -14,6 +14,7 @@ namespace Dashboard_WebAPP.Models
             get
             {
                 return new List<SunnyPortal>() {
+                    new SunnyPortal() {Place = "TR Energy 0.99MWp", Id="TR Energy 0.99MWp"},
                     new SunnyPortal() {Place = "TCMA 1MWp", Id="TCMA 1MWp"},
                     new SunnyPortal() {Place = "Toyo Tires Manufacturing (M)", Id="Toyo Tires Manufacturing (M)"},
                     new SunnyPortal() {Place = "Choo Lay Khuan 5kWp", Id="Choo Lay Khuan 5kWp"},
@@ -56,7 +57,6 @@ namespace Dashboard_WebAPP.Models
                     new SunnyPortal() {Place = "SYW INDUSTRY", Id="SYW INDUSTRY"},
                     new SunnyPortal() {Place = "ICP Ulu Choh", Id="ICP Ulu Choh"},
                     new SunnyPortal() {Place = "Thumbprints Utd Sdn Bhd", Id="Thumbprints Utd Sdn Bhd"},
-                    new SunnyPortal() {Place = "TR Energy 0.99MWp", Id="TR Energy 0.99MWp"},
                     new SunnyPortal() {Place = "FIRMA ODESI 1MW", Id="FIRMA ODESI 1MW"},
 
                 };

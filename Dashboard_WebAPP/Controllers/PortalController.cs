@@ -18,8 +18,8 @@ namespace Dashboard_WebAPP.Controllers
         public ActionResult PortalIndex()
         {
             var m = new PortalViewModel();
-            ViewData["selectedInverter_sunny"] = "No Inverter Selected.";
-            viewbagData(Request["ddlInverter_sunny"]);
+            ViewData["selectedInverter_sunny"] = "ID of Selected Inverter: TR Energy 0.99MWp";
+            viewbagData("TR Energy 0.99MWp");
             SqlStringRetrieve();
             return View(m);
         }
@@ -367,8 +367,8 @@ namespace Dashboard_WebAPP.Controllers
                 }
                 sqlConn.Close();
             }
-            ViewBag.myTotalCurrentPowerVal = totalCurrentPowerVal.ToString() + "W" ;
-            ViewBag.myTotalEnergyToday = totalEnergyToday.ToString("N0") + "Wh";
+            ViewBag.myTotalCurrentPowerVal = (Convert.ToInt32(totalCurrentPowerVal /1000)).ToString() + "kW" ;
+            ViewBag.myTotalEnergyToday = (Convert.ToInt32(totalEnergyToday /1000)).ToString("N0") + "kWh";
             ViewBag.myTotalEnergyAllTime = totalEnergyAllTime.ToString() + "MWh";
         }
     }

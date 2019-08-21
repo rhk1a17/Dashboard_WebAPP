@@ -17,7 +17,7 @@
 
     @using (Html.BeginForm("Index", "Home", FormMethod.Post))
     {
-        @Html.DropDownList("ddlInverter", Model.GetInverterListItems(), new { @onchange = "this.form.submit();" })
+        @Html.DropDownList("ddlInverter", Model.GetInverterListItems(), "Select an Inverter", new { @onchange = "this.form.submit();" })
 
     }
     @ViewData["selectedInverter"]
@@ -173,8 +173,4 @@
             </div>
         </div>
     </div><!-- end row4 -->
-</div>
-
-<div style="height:500px; border:2px solid #eee; display:inline-block; overflow:hidden;">
-    <iframe style="position:relative; top:-46px; border:none;" src="https://www.google.com/maps/d/embed?mid=1cSBXBagksBncIKjvyCgFcJEUW2MaHz2O" width="1000" height="500"></iframe>
 </div>
