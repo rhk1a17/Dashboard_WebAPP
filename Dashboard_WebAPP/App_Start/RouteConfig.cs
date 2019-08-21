@@ -16,7 +16,7 @@ namespace Dashboard_WebAPP
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Maps", id = UrlParameter.Optional }
+                defaults: new { controller = "Portal", action = "PortalIndex", id = UrlParameter.Optional }
             );
         }
     }

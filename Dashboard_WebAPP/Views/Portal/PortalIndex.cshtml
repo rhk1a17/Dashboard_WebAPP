@@ -12,53 +12,51 @@
     </style>*@
 
 
-    <div class="jumbotron">
-        <h1>Sunny Portal Dashboard</h1>
-        <div><a href="http://www.ers.my/" class="btn btn-primary btn-lg">Learn more about ERS! &raquo;</a></div>
-        <div class="row">
+<div class="jumbotron">
+    <h1>Sunny Portal Dashboard</h1>
+    <div><a href="http://www.ers.my/" class="btn btn-primary btn-lg">Learn more about ERS! &raquo;</a></div>
+    <div class="row">
 
-            <div class="col-md-3 text-center">
-                <div class="single-content text-center">
-                    <div class="item-text">
-                        <div class="row">
-                            <br />
-                        </div><!-- SPACING-->
-                        @using (Html.BeginForm("PortalIndex", "Portal", FormMethod.Post))
-                        {
-                            @Html.DropDownList("ddlInverter_sunny", Model.GetInverterListItems(), new { @onchange = "this.form.submit();" })
-                        }
-                        @ViewData["selectedInverter_sunny"]
-                    </div>
+        <div class="col-md-3 text-center">
+            <div class="single-content text-center">
+                <div class="item-text">
+                    <div class="row">
+                        <br />
+                    </div><!-- SPACING-->
+                    @using (Html.BeginForm("PortalIndex", "Portal", FormMethod.Post))
+                    {
+                        @Html.DropDownList("ddlInverter_sunny", Model.GetInverterListItems(), new { @onchange = "this.form.submit();" })
+                    }
+                    @ViewData["selectedInverter_sunny"]
                 </div>
             </div>
-            <div class="col-md-3 text-center">
-                <div class="single-content text-center">
-                    <div class="item-text">
-                        <h3> @ViewBag.myTotalCurrentPowerVal </h3>
-                        <p>Total Current Power</p>
-                    </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="single-content text-center">
+                <div class="item-text">
+                    <h3> @ViewBag.myTotalCurrentPowerVal </h3>
+                    <p>Total Current Power</p>
                 </div>
             </div>
-            <div class="col-md-3 text-center">
-                <div class="single-content text-center">
-                    <div class="item-text">
-                        <h3>@ViewBag.myTotalEnergyToday</h3>
-                        <p>Total Energy Generated Today</p>
-                    </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="single-content text-center">
+                <div class="item-text">
+                    <h3>@ViewBag.myTotalEnergyToday</h3>
+                    <p>Total Energy Generated Today</p>
                 </div>
             </div>
-            <div class="col-md-3 text-center">
-                <div class="single-content text-center">
-                    <div class="item-text">
-                        <h3>@ViewBag.myTotalEnergyAllTime</h3>
-                        <p>Energy Generated All Time</p>
-                    </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="single-content text-center">
+                <div class="item-text">
+                    <h3>@ViewBag.myTotalEnergyAllTime</h3>
+                    <p>Energy Generated All Time</p>
                 </div>
             </div>
-        </div><!-- end title row -->
-
-
-    </div>
+        </div>
+    </div><!-- end title row -->
+</div>
 
 <div class="row">
     <div class="col-md-3 text-center">
