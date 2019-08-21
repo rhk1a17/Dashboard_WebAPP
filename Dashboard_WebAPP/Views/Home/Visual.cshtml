@@ -50,7 +50,7 @@
         $(id1).attr('style', 'background-color:azure');
         $(id2).attr('style', 'background-color:lightblue');
 
-        var inStr = '@Url.Action("xChart","Home", new { serial_no = Request["ddlInverter"] })';
+        var inStr = '@Url.Action("xChart","Home", new { serial_no = ViewBag.mySerial })';
         inStr = inStr.replace("xChart", chartName);
         $(id).attr('src', inStr);
     }
@@ -62,7 +62,7 @@
         $(id1).attr('style', 'background-color:azure');
         $(id2).attr('style', 'background-color:lightblue');
 
-        var inStr = '@Url.Action("xChart","Home", new { serial_no = Request["ddlInverter"] })';
+        var inStr = '@Url.Action("xChart","Home", new { serial_no = ViewBag.mySerial })';
         inStr = inStr.replace("xChart", chartName);
         $(id).attr('src', inStr);
     }

@@ -12,6 +12,10 @@ namespace Dashboard_WebAPP.Controllers
 {
     public class HomeController : Controller
     {
+        public ActionResult Maps()
+        {
+            return View();
+        }
         public ActionResult Index() // DASHBOARD
         {
             var m = new ViewModel();
