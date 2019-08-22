@@ -21,6 +21,7 @@ namespace Dashboard_WebAPP.Controllers
             ViewData["selectedInverter_sunny"] = "ID of Selected Inverter: TR Energy 0.99MWp";
             viewbagData("TR Energy 0.99MWp");
             SqlStringRetrieve();
+            ViewBag.myValue = 0;
             return View(m);
         }
 
@@ -32,6 +33,7 @@ namespace Dashboard_WebAPP.Controllers
             ViewData["selectedInverter_sunny"] = "ID of Selected Inverter: " + Request["ddlInverter_sunny"];
             viewbagData(Request["ddlInverter_sunny"]);
             SqlStringRetrieve();
+            ViewBag.myValue = 1;
             return View(m);
         }
 
