@@ -18,7 +18,7 @@ namespace Dashboard_WebAPP.Controllers
         public ActionResult PortalIndex()
         {
             var m = new PortalViewModel();
-            ViewData["selectedInverter_sunny"] = "";
+            ViewData["selectedInverter_sunny"] = "  ";
             viewbagData("TR Energy 0.99MWp");
             SqlStringRetrieve();
             ViewBag.myValue = 0;
