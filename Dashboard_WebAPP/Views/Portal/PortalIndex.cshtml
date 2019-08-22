@@ -3,23 +3,15 @@
 }
 @model Dashboard_WebAPP.Models.PortalViewModel
 
-<div class="jumbotron">
-    <h1>ERS Portal</h1>
-    <div><a href="http://www.ers.my/" class="btn btn-primary btn-lg">Learn more about ERS! &raquo;</a></div>
-    <div class="row">
-        <div class="col-md-3 text-center">
-            <div class="single-content text-center">
-                <div class="item-text">
-                    <div class="row">
-                        <br />
-                    </div><!-- SPACING-->
-                    @using (Html.BeginForm("PortalIndex", "Portal", FormMethod.Post))
-                    {
-                        @Html.DropDownList("ddlInverter_sunny", Model.GetInverterListItems(), "-----Select an Inverter-----", new { @onchange = "this.form.submit();" })
-                    }
-                    @ViewData["selectedInverter_sunny"]
-                </div>
-            </div>
+<div class="jumbotron" style="height: 0px">
+    @*<h1>ERS Portal</h1>
+    <div><a href="http://www.ers.my/" class="btn btn-primary btn-lg">Learn more about ERS! &raquo;</a></div>*@
+    <div>
+        <div style="padding-left: 800px;">
+            @using (Html.BeginForm("PortalIndex", "Portal", FormMethod.Post))
+            {
+                @Html.DropDownList("ddlInverter_sunny", Model.GetInverterListItems(), "-----Select an Inverter-----", new { @onchange = "this.form.submit();" })
+            }
         </div>
     </div><!-- end title row -->
 </div>
