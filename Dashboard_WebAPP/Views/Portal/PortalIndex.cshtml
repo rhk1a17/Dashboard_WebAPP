@@ -4,10 +4,9 @@
 @model Dashboard_WebAPP.Models.PortalViewModel
 
 <div class="jumbotron">
-    <h1>Sunny Portal Dashboard</h1>
+    <h1>ERS Portal</h1>
     <div><a href="http://www.ers.my/" class="btn btn-primary btn-lg">Learn more about ERS! &raquo;</a></div>
     <div class="row">
-
         <div class="col-md-3 text-center">
             <div class="single-content text-center">
                 <div class="item-text">
@@ -16,7 +15,7 @@
                     </div><!-- SPACING-->
                     @using (Html.BeginForm("PortalIndex", "Portal", FormMethod.Post))
                     {
-                        @Html.DropDownList("ddlInverter_sunny", Model.GetInverterListItems(), new { @onchange = "this.form.submit();" })
+                        @Html.DropDownList("ddlInverter_sunny", Model.GetInverterListItems(),"-----Select an Inverter-----", new { @onchange = "this.form.submit();" })
                     }
                     @ViewData["selectedInverter_sunny"]
                 </div>
@@ -114,44 +113,4 @@ else
 
     <div><img style="-webkit-user-select: none;margin: auto;" src=@ViewBag.myGraphURL /></div>
 }
-@*<div class="row">
-    <div class="col-md-3 text-center">
-        <div class="single-content text-center">
-            <div class="item-text">
-                <h3>@ViewBag.myCurrentPower</h3>
-                <p>Current Power</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 text-center">
-        <div class="single-content text-center">
-            <div class="item-text">
-                <h3>@ViewBag.myEnergyToday</h3>
-                <p>PV Energy Today</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 text-center">
-        <div class="single-content text-center">
-            <div class="item-text">
-                <h3>@ViewBag.myTotalEnergy</h3>
-                <p>Total Energy Generated</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 text-center">
-        <div class="single-content text-center">
-            <div class="item-text">
-                <h3>@ViewBag.myCO2today</h3>
-                <p>CO2 Avoided Today</p>
-            </div>
-        </div>
-    </div>
-</div>*@
-
-@*<div><img style="-webkit-user-select: none;margin: auto;" src=@ViewBag.myGraphURL /></div>*@
-
-@*<div style="height:654px; border:2px solid #eee; display:inline-block; overflow:hidden; margin-top: -620px;">
-    <iframe style="position:relative; top:-46px; border:none;" src="https://www.google.com/maps/d/embed?mid=1cSBXBagksBncIKjvyCgFcJEUW2MaHz2O" width="1105" height="700"></iframe>
-</div>*@
 
