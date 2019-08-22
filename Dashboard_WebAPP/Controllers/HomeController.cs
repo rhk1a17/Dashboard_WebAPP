@@ -12,10 +12,6 @@ namespace Dashboard_WebAPP.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Maps()
-        {
-            return View();
-        }
         public ActionResult Index() // DASHBOARD
         {
             var m = new ViewModel();
@@ -23,6 +19,7 @@ namespace Dashboard_WebAPP.Controllers
             viewbagData("2130242191"); // ADDING OUTPUT TO VIWBAG TO DISPLAY ON HTML
             ViewBag.myURL = "https://forecast7.com/en/3d06101d72/sungai-besi/";
             ViewBag.myDataLabel = "SUNGAI BESI";
+            SqlStringRetrieve();
             return View(m);
         }
 
@@ -47,6 +44,7 @@ namespace Dashboard_WebAPP.Controllers
             ViewData["selectedInverter"] = "Serial Number of Selected Inverter: " + Request["ddlInverter"];
             viewbagData(Request["ddlInverter"]); // ADDING OUTPUT TO VIWBAG TO DISPLAY ON HTML
             weatherWidget();
+            SqlStringRetrieve();
             return View(m);
         }
 
@@ -562,6 +560,84 @@ namespace Dashboard_WebAPP.Controllers
             return chart;
         }
         //===============================END OF MONTHLY CHART===============================
+
+        public void SqlStringRetrieve()
+        {
+            SqlConnectionStringBuilder sql = new SqlConnectionStringBuilder();
+
+            //SQL QUERY
+            float totalCurrentPowerVal = 0;
+            float totalEnergyToday = 0;
+            float totalEnergyAllTime = 0;
+
+            string retrieve = "SELECT DISTINCT TOP 44 * FROM SUNNY_PORTAL_STRING WHERE CONVERT(date, _datetime) = FORMAT(GETDATE(), 'yyyy/MM/dd') ORDER BY real_datetime DESC;";
+
+            // SQL login data
+            sql.DataSource = "sqlsever-ers.database.windows.net";   // Server name from azure
+            sql.UserID = "ers"; // ID to access DB
+            sql.Password = "testing123#";   //password to access DB
+            sql.InitialCatalog = "inverterDB";  //Database name
+
+            using (SqlConnection sqlConn = new SqlConnection(sql.ConnectionString))
+            {
+                SqlCommand sqlCommand = new SqlCommand(retrieve, sqlConn);
+                try
+                {
+                    sqlConn.Open();
+                    sqlCommand.ExecuteNonQuery();
+                    SqlDataReader reader = sqlCommand.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            float tempPower;
+                            float tempEnergy;
+                            float tempTotal;
+
+                            string power_unit = reader.GetTextReader(3).ReadToEnd().ToString();
+                            string energy_unit = reader.GetTextReader(5).ReadToEnd().ToString();
+                            string total_energy_unit = reader.GetTextReader(7).ReadToEnd().ToString();
+
+                            if (float.TryParse(reader.GetTextReader(2).ReadToEnd().ToString(), out tempPower) && power_unit == "kW")
+                            {
+                                float current_power = tempPower;
+                                totalCurrentPowerVal += (current_power * 1000);
+                            }
+                            else if (float.TryParse(reader.GetTextReader(2).ReadToEnd().ToString(), out tempPower) && power_unit == "W")
+                            {
+                                float current_power = tempPower;
+                                totalCurrentPowerVal += current_power;
+                            }
+
+                            if (float.TryParse(reader.GetTextReader(4).ReadToEnd().ToString(), out tempEnergy) && energy_unit == "kWh")
+                            {
+                                float energy_today = tempEnergy;
+                                totalEnergyToday += (energy_today * 1000);
+                            }
+                            else if (float.TryParse(reader.GetTextReader(4).ReadToEnd().ToString(), out tempEnergy) && energy_unit == "Wh")
+                            {
+                                float energy_today = tempEnergy;
+                                totalEnergyToday += energy_today;
+                            }
+
+                            if (float.TryParse(reader.GetTextReader(6).ReadToEnd().ToString(), out tempTotal) && total_energy_unit == "MWh")
+                            {
+                                float total_energy = tempTotal;
+                                totalEnergyAllTime += total_energy;
+                            }
+                        }
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                sqlConn.Close();
+            }
+            ViewBag.myTotalCurrentPowerVal = (Convert.ToInt32(totalCurrentPowerVal / 1000)).ToString() + "kW";
+            ViewBag.myTotalEnergyToday = (Convert.ToInt32(totalEnergyToday / 1000)).ToString("N0") + "kWh";
+            ViewBag.myTotalEnergyAllTime = totalEnergyAllTime.ToString() + "MWh";
+        }
     }
 }
 

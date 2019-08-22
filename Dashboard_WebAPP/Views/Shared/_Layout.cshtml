@@ -23,6 +23,26 @@
                     <li class="nav-item">@Html.ActionLink("ERS Monitoring", "Index", "Home", null, new { @class = "nav-link" })</li>
                     @*<li class="nav-item">@Html.ActionLink("Maps", "Maps", "Home", null, new { @class = "nav-link" })</li>*@
                 </ul>
+                <ul class="nav navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <div class="item-text" style="text-align: center; color:white; margin-left:30px">
+                            <h5> @ViewBag.myTotalCurrentPowerVal </h5>
+                            <p>Total Current Power</p>
+                        </div>
+                    </li>
+                    <li class="nav navbar-nav mr-auto">
+                        <div class="item-text" style="text-align: center; color:white; margin-left:30px">
+                            <h5>@ViewBag.myTotalEnergyToday</h5>
+                            <p>Total Energy Generated Today</p>
+                        </div>
+                    </li>
+                    <li class="nav navbar-nav mr-auto">
+                        <div class="item-text" style="text-align: center; color:white; margin-left:30px">
+                            <h5>@ViewBag.myTotalEnergyAllTime</h5>
+                            <p>Energy Generated All Time</p>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
