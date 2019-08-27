@@ -570,7 +570,7 @@ namespace Dashboard_WebAPP.Controllers
             float totalEnergyToday = 0;
             float totalEnergyAllTime = 0;
 
-            string retrieve = "SELECT DISTINCT TOP 44 * FROM SUNNY_PORTAL_STRING WHERE CONVERT(date, _datetime) = FORMAT(GETDATE(), 'yyyy/MM/dd') ORDER BY real_datetime DESC;";
+            string retrieve = "SELECT DISTINCT TOP 44 * FROM SUNNY_PORTAL_STRING ORDER BY real_datetime DESC;";
 
             // SQL login data
             sql.DataSource = "sqlsever-ers.database.windows.net";   // Server name from azure
