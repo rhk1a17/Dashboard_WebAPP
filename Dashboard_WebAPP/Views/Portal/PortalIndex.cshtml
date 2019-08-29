@@ -84,6 +84,8 @@
           var Thumbprints_Con = '@(ViewBag.Thumbprints_Con)';//
           var Firma_Con = '@(ViewBag.Firma_Con)';//
           var NK_Con = '@(ViewBag.NK_Con)';//
+          var Maran_500_Con = '@(ViewBag.Maran_500_Con)';//
+          var Maran_NEM_Con = '@(ViewBag.Maran_NEM_Con)';//
     </script>
 
     <div id="map"></div>
@@ -99,6 +101,8 @@
             //GREEN MARKER http://maps.google.com/mapfiles/ms/icons/green-dot.png
             var TR_Energy = new google.maps.Marker({ position: { lat: 6.90869, lng: 116.81816 }, map: map, icon: { url: TR_Con } }); //TR Energy 0.99MWp
             var NK_Energy = new google.maps.Marker({ position: { lat: 6.909879, lng: 116.819468 }, map: map, icon: { url: NK_Con } }); //NK Energy 0.99MWp Solar Farm
+            var Maran_500 = new google.maps.Marker({ position: { lat: 3.4434, lng: 102.4392 }, map: map, icon: { url: Maran_500_Con } }); //Maran Road Sawmill - 500kWp
+            var Maran_NEM = new google.maps.Marker({ position: { lat: 3.4434, lng: 102.4388 }, map: map, icon: { url: Maran_NEM_Con } }); //Maran Road Sawmill NEM
             var TCMA = new google.maps.Marker({ position: { lat: 3.3541, lng: 101.5591 }, map: map, icon: { url: TCMA_Con } }); //Tan Chong Motor Assemblies Sdn Bhd
             var Toyo = new google.maps.Marker({ position: { lat: 4.860523, lng: 100.697029 }, map: map, icon: { url: Toyo_Con } }); //Toyo Tires Manufacturing (M)
             var CLK = new google.maps.Marker({ position: { lat: 3.158688, lng: 101.658661 }, map: map, icon: { url: CLK_Con } }); //Choo Lay Khuan 5kWp
@@ -145,6 +149,8 @@
 
             var TR_Energy_CS = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h4 id="firstHeading" class="firstHeading">TR Energy 0.99MWp</h4>' + '<div id="bodyContent">' + '<p>Info Here</p>' + '</div>' + '</div>';
             var NK_Energy_CS = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h4 id="firstHeading" class="firstHeading">NK Energy 0.99MWp Solar Farm</h4>' + '<div id="bodyContent">' + '<p>Info Here</p>' + '</div>' + '</div>';
+            var Maran_500_CS = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h4 id="firstHeading" class="firstHeading">Maran Road Sawmill - 500kWp</h4>' + '<div id="bodyContent">' + '<p>Info Here</p>' + '</div>' + '</div>';
+            var Maran_NEM_CS = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h4 id="firstHeading" class="firstHeading">Maran Road Sawmill NEM</h4>' + '<div id="bodyContent">' + '<p>Info Here</p>' + '</div>' + '</div>';
             var TCMA_CS = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h4 id="firstHeading" class="firstHeading">Tan Chong Motor Assemblies Sdn Bhd</h4>' + '<div id="bodyContent">' + '<p>Info Here</p>' + '</div>' + '</div>';
             var Toyo_CS = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h4 id="firstHeading" class="firstHeading">Toyo Tires Manufacturing (M)</h4>' + '<div id="bodyContent">' + '<p>Info Here</p>' + '</div>' + '</div>';
             var CLK_CS = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h4 id="firstHeading" class="firstHeading">Choo Lay Khuan 5kWp</h4>' + '<div id="bodyContent">' + '<p>Info Here</p>' + '</div>' + '</div>';
@@ -191,6 +197,8 @@
 
             var TR_infowindow = new google.maps.InfoWindow({ content: TR_Energy_CS });
             var NK_infowindow = new google.maps.InfoWindow({ content: NK_Energy_CS });
+            var Maran_500_infowindow = new google.maps.InfoWindow({ content: Maran_500_CS });
+            var Maran_NEM_infowindow = new google.maps.InfoWindow({ content: Maran_NEM_CS });
             var TCMA_infowindow = new google.maps.InfoWindow({ content: TCMA_CS });
             var Toyo_infowindow = new google.maps.InfoWindow({ content: Toyo_CS });
             var CLK_infowindow = new google.maps.InfoWindow({ content: CLK_CS });
@@ -237,6 +245,8 @@
 
             TR_Energy.addListener('mouseover', function () { TR_infowindow.open(map, TR_Energy); });
             NK_Energy.addListener('mouseover', function () { NK_infowindow.open(map, NK_Energy); });
+            Maran_500.addListener('mouseover', function () { Maran_500_infowindow.open(map, Maran_500); });
+            Maran_NEM.addListener('mouseover', function () { Maran_NEM_infowindow.open(map, Maran_NEM); });
             TCMA.addListener('mouseover', function () { TCMA_infowindow.open(map, TCMA); });
             Toyo.addListener('mouseover', function () { Toyo_infowindow.open(map, Toyo); });
             CLK.addListener('mouseover', function () { CLK_infowindow.open(map, CLK); });
@@ -283,6 +293,8 @@
 
             TR_Energy.addListener('mouseout', function () { TR_infowindow.close(); });
             NK_Energy.addListener('mouseout', function () { NK_infowindow.close(); });
+            Maran_500.addListener('mouseout', function () { Maran_500_infowindow.close(); });
+            Maran_NEM.addListener('mouseout', function () { Maran_NEM_infowindow.close(); });
             TCMA.addListener('mouseout', function () { TCMA_infowindow.open(); });
             Toyo.addListener('mouseout', function () { Toyo_infowindow.open(); });
             CLK.addListener('mouseout', function () { CLK_infowindow.open(); });

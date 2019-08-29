@@ -85,11 +85,13 @@ namespace Dashboard_WebAPP.Controllers
             ViewBag.Thumbprints_Con = Condition("Thumbprints Utd Sdn Bhd");
             ViewBag.Firma_Con = Condition("FIRMA ODESI 1MW");
             ViewBag.NK_Con = Condition("NK Energy 0.99MWp Solar Farm");
+            ViewBag.Maran_500_Con = Condition("Maran Road Sawmill - 500kWp");
+            ViewBag.Maran_NEM_Con = Condition("Maran Road Sawmill NEM");
         }
 
         public string Condition(string Id)
         {
-            string datestamp = Convert.ToDateTime(Timestamp(Id)).ToShortDateString();
+            string datestamp = (Convert.ToDateTime(Timestamp(Id))).ToShortDateString();
             string datenow = DateTime.Now.ToShortDateString();
             string dateyesterday = DateTime.Today.AddDays(-1).ToShortDateString();
             string icon = String.Empty;
@@ -371,7 +373,7 @@ namespace Dashboard_WebAPP.Controllers
             float totalEnergyToday = 0;
             float totalEnergyAllTime = 0;
 
-            string retrieve = "SELECT DISTINCT TOP 45 * FROM SUNNY_PORTAL_STRING ORDER BY real_datetime DESC;";
+            string retrieve = "SELECT DISTINCT TOP 47 * FROM SUNNY_PORTAL_STRING ORDER BY real_datetime DESC;";
 
             // SQL login data
             sql.DataSource = "sqlsever-ers.database.windows.net";   // Server name from azure
