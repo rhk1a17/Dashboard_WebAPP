@@ -90,8 +90,9 @@ namespace Dashboard_WebAPP.Controllers
         {
             string datestamp = Convert.ToDateTime(Timestamp(Id)).ToShortDateString();
             string datenow = DateTime.Now.ToShortDateString();
+            string dateyesterday = DateTime.Today.AddDays(-1).ToShortDateString();
             string icon = String.Empty;
-            if (datestamp == datenow)
+            if (datestamp == datenow || datestamp == dateyesterday)
             {
                 icon = "http://maps.google.com/mapfiles/ms/icons/green-dot.png";
             }
