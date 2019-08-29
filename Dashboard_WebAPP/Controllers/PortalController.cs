@@ -84,6 +84,7 @@ namespace Dashboard_WebAPP.Controllers
             ViewBag.ICP_Con = Condition("ICP Ulu Choh");
             ViewBag.Thumbprints_Con = Condition("Thumbprints Utd Sdn Bhd");
             ViewBag.Firma_Con = Condition("FIRMA ODESI 1MW");
+            ViewBag.NK_Con = Condition("NK Energy 0.99MWp Solar Farm");
         }
 
         public string Condition(string Id)
@@ -370,7 +371,7 @@ namespace Dashboard_WebAPP.Controllers
             float totalEnergyToday = 0;
             float totalEnergyAllTime = 0;
 
-            string retrieve = "SELECT DISTINCT TOP 44 * FROM SUNNY_PORTAL_STRING ORDER BY real_datetime DESC;";
+            string retrieve = "SELECT DISTINCT TOP 45 * FROM SUNNY_PORTAL_STRING ORDER BY real_datetime DESC;";
 
             // SQL login data
             sql.DataSource = "sqlsever-ers.database.windows.net";   // Server name from azure

@@ -15,6 +15,7 @@ namespace Dashboard_WebAPP.Models
             {
                 return new List<SunnyPortal>() {
                     new SunnyPortal() {Place = "TR Energy 0.99MWp", Id="TR Energy 0.99MWp"},
+                    new SunnyPortal() {Place = "NK Energy 0.99MWp Solar Farm", Id="NK Energy 0.99MWp Solar Farm"},
                     new SunnyPortal() {Place = "TCMA 1MWp", Id="TCMA 1MWp"},
                     new SunnyPortal() {Place = "Toyo Tires Manufacturing (M)", Id="Toyo Tires Manufacturing (M)"},
                     new SunnyPortal() {Place = "Choo Lay Khuan 5kWp", Id="Choo Lay Khuan 5kWp"},
