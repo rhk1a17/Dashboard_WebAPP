@@ -569,8 +569,9 @@ namespace Dashboard_WebAPP.Controllers
             float totalCurrentPowerVal = 0;
             float totalEnergyToday = 0;
             float totalEnergyAllTime = 0;
+            float totalCap = 0;
 
-            string retrieve = "SELECT DISTINCT TOP 44 * FROM SUNNY_PORTAL_STRING ORDER BY real_datetime DESC;";
+            string retrieve = "SELECT DISTINCT TOP 47 * FROM SUNNY_PORTAL_STRING ORDER BY real_datetime DESC;";
 
             // SQL login data
             sql.DataSource = "sqlsever-ers.database.windows.net";   // Server name from azure
@@ -625,6 +626,19 @@ namespace Dashboard_WebAPP.Controllers
                                 float total_energy = tempTotal;
                                 totalEnergyAllTime += total_energy;
                             }
+
+                            if (reader.GetTextReader(11).ReadToEnd().ToString().Contains("kWp"))
+                            {
+                                string text = reader.GetTextReader(11).ReadToEnd().ToString();
+                                string capValue = text.Substring(0, text.Length - 4);
+                                totalCap += float.Parse(capValue);
+                            }
+                            else if (reader.GetTextReader(11).ReadToEnd().ToString().Contains("Wp"))
+                            {
+                                string text = reader.GetTextReader(11).ReadToEnd().ToString();
+                                string capValue = text.Substring(0, text.Length - 3);
+                                totalCap += (float.Parse(capValue) / 1000);
+                            }
                         }
                     }
                 }
@@ -637,6 +651,7 @@ namespace Dashboard_WebAPP.Controllers
             ViewBag.myTotalCurrentPowerVal = (Convert.ToInt32(totalCurrentPowerVal / 1000)).ToString() + "kW";
             ViewBag.myTotalEnergyToday = (Convert.ToInt32(totalEnergyToday / 1000)).ToString("N0") + "kWh";
             ViewBag.myTotalEnergyAllTime = totalEnergyAllTime.ToString() + "MWh";
+            ViewBag.myTotalCap = totalCap.ToString() + "kWp";
         }
     }
 }
